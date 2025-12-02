@@ -1,7 +1,7 @@
 export default function Leaderboard() {
   return (
     <div>
-      <h2 className="text-2xl font-bold mb-4 text-white">Leaderboard</h2>
+      <h2 className="font-pixel text-2xl font-bold mb-4 text-white">Leaderboard</h2>
       <div className="space-y-4">
         <div className="flex items-center justify-between p-4 border border-gray-600 rounded-lg bg-gray-800">
           <div className="flex items-center space-x-4">
