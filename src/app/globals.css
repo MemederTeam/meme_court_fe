@@ -10,6 +10,20 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-pixel: var(--font-press-start);
+  --font-pixel-kr: var(--font-neodgm);
+}
+
+
+.text-pixel-shadow {
+  text-shadow: 2px 2px 0px rgba(0,0,0,0.3);
+}
+.font-pixel {
+  font-family: var(--font-press-start);
+}
+
+.font-pixel-kr {
+  font-family: var(--font-neodgm);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -18,6 +32,7 @@
     --foreground: #ededed;
   }
 }
+
 
 body {
   background: var(--background);
