@@ -2,8 +2,8 @@
 
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
-import VerticalFeed from "@/components/VerticalFeed";
-import ErrorBoundary from "@/components/ErrorBoundary";
+import { VerticalFeed } from "@/components/feed";
+import { ErrorBoundary } from "@/components/common";
 import { mockReelsData } from "@/data/mockReels";
 import { hotTopicsData } from "@/data/mockTopics";
 

@@ -23,7 +23,7 @@ export default function CardStack({ topic, onClick }: CardStackProps) {
       onClick={handleClick}
     >
       <div className="flex justify-between items-start mb-4">
-        <h3 className="font-pixel-kr text-lg font-semibold text-white">{title}</h3>
+        <h3 className="text-lg font-semibold text-white">{title}</h3>
         {popularity && (
           <div className="flex items-center">
             <div className="w-2 h-2 bg-red-500 rounded-full mr-1"></div>
@@ -54,7 +54,7 @@ export default function CardStack({ topic, onClick }: CardStackProps) {
                   className="w-full h-full object-cover"
                 />
               ) : (
-                <span className="font-pixel-kr text-gray-400 text-sm">이미지</span>
+                <span className="text-gray-400 text-sm">이미지</span>
               )}
             </div>
           </div>
@@ -62,12 +62,12 @@ export default function CardStack({ topic, onClick }: CardStackProps) {
       </div>
       
       <div className="absolute bottom-4 right-4">
-        <span className="font-pixel text-blue-400 font-bold text-lg">+{count}</span>
+        <span className="text-blue-400 font-bold text-lg">+{count}</span>
       </div>
       
       {category && (
         <div className="absolute top-4 right-4">
-          <span className="font-pixel text-xs bg-gray-700 text-gray-300 px-2 py-1 rounded">
+          <span className="text-xs bg-gray-700 text-gray-300 px-2 py-1 rounded">
             {category}
           </span>
         </div>

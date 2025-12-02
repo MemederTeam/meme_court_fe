@@ -1,4 +1,4 @@
-import HotTopics from "@/components/HotTopics";
+import { HotTopics } from "@/components/topics";
 
 export default function HotTopicsPage() {
   return (

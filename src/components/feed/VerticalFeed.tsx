@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { ReelPost } from "@/data/mockReels";
 import ReelCard from "./ReelCard";
 import { useFeedStore } from "@/store/feedStore";
-import ErrorBoundary from "./ErrorBoundary";
+import ErrorBoundary from "../common/ErrorBoundary";
 
 interface VerticalFeedProps {
   posts: ReelPost[];
@@ -86,9 +86,9 @@ export default function VerticalFeed({ posts, topicName }: VerticalFeedProps) {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'ArrowDown' && currentIndex < posts.length - 1) {
-        setCurrentIndex(prev => prev + 1);
+        setCurrentIndex(currentIndex + 1);
       } else if (e.key === 'ArrowUp' && currentIndex > 0) {
-        setCurrentIndex(prev => prev - 1);
+        setCurrentIndex(currentIndex - 1);
       }
     };
 

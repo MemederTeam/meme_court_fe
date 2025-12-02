@@ -1,9 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import TabNavigation from "@/components/TabNavigation";
-import HotTopics from "@/components/HotTopics";
-import Leaderboard from "@/components/Leaderboard";
+import { TabNavigation } from "@/components/navigation";
+import { HotTopics, Leaderboard } from "@/components/topics";
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState("hot-topics");

@@ -1,8 +1,8 @@
 "use client";
 
 import { ReelPost } from "@/data/mockReels";
-import PostInteractions from "./PostInteractions";
-import LazyImage from "./LazyImage";
+import { PostInteractions } from "../ui";
+import { LazyImage } from "../common";
 import { memo } from "react";
 
 interface ReelCardProps {
@@ -41,16 +41,17 @@ const ReelCard = memo(function ReelCard({
       <div className="flex-1 relative">
         {/* Background Image/Content */}
         <div className="absolute inset-0">
-          <LazyImage
-            src={content.image}
-            alt="Post content"
-            className="w-full h-full object-cover"
-            placeholder={
-              <div className="w-full h-full bg-gray-800 flex items-center justify-center">
-                <span className="text-gray-400 text-lg">이미지 없음</span>
-              </div>
-            }
-          />
+          {content.image ? (
+            <LazyImage
+              src={content.image}
+              alt="Post content"
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <div className="w-full h-full bg-gray-800 flex items-center justify-center">
+              <span className="text-gray-400 text-lg">이미지 없음</span>
+            </div>
+          )}
           {/* Dark overlay for text readability */}
           <div className="absolute inset-0 bg-black/30"></div>
         </div>
@@ -59,16 +60,17 @@ const ReelCard = memo(function ReelCard({
         <div className="absolute top-16 left-4 right-4 z-20">
           <div className="flex items-center space-x-3">
             <div className="w-12 h-12 rounded-full bg-gray-300 overflow-hidden">
-              <LazyImage
-                src={author.avatar}
-                alt={author.username}
-                className="w-full h-full object-cover"
-                placeholder={
-                  <div className="w-full h-full bg-gray-600 flex items-center justify-center">
-                    <span className="text-white text-xs">{author.username[0]}</span>
-                  </div>
-                }
-              />
+              {author.avatar ? (
+                <LazyImage
+                  src={author.avatar}
+                  alt={author.username}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <div className="w-full h-full bg-gray-600 flex items-center justify-center">
+                  <span className="text-white text-xs">{author.username[0]}</span>
+                </div>
+              )}
             </div>
             <div>
               <h4 className="text-white font-semibold">{author.username}</h4>
