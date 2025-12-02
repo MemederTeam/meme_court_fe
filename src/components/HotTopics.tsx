@@ -13,7 +13,7 @@ export default function HotTopics() {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold mb-6 text-white">Hot Topics</h2>
+      <h2 className="font-pixel text-2xl font-bold mb-6 text-white">Hot Topics</h2>
       <TopicGrid topics={hotTopicsData} onTopicClick={handleTopicClick} />
     </div>
   );
