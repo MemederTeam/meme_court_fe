@@ -2,12 +2,11 @@ import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
 interface PostInteraction {
-  likes: number;
-  comments: number;
-  shares: number;
-  views: number;
-  isLiked: boolean;
-}
+    funny: number;      // likes 대신
+    notFunny: number;   // comments 대신
+    total: number;      // views
+    userVote?: 'funny' | 'not_funny' | null;  // isLiked 대신
+  }
 
 interface FeedState {
   // Navigation state
@@ -27,15 +26,15 @@ interface FeedState {
   setNavigating: (isNavigating: boolean) => void;
   
   // Interaction actions
-  toggleLike: (postId: string, currentLikes: number) => void;
-  incrementViews: (postId: string, currentViews: number) => void;
+  toggleVote: (postId: string, voteType: 'funny' | 'not_funny') => void;
+  incrementTotal: (postId: string) => void;
   updateInteraction: (postId: string, interaction: Partial<PostInteraction>) => void;
-  
+
   // Performance actions
   setVisibleRange: (range: [number, number]) => void;
-  
+
   // Bulk actions for performance
-  initializeInteractions: (posts: Array<{ id: string; interactions: any }>) => void;
+  initializeInteractions: (posts: Array<{ id: string; vote_count: any }>) => void;
   resetFeed: () => void;
 }
 
@@ -67,41 +66,47 @@ export const useFeedStore = create<FeedState>()(
         set({ isNavigating }, false, 'setNavigating'),
       
       // Interaction actions
-      toggleLike: (postId: string, currentLikes: number) => {
+      toggleVote: (postId: string, voteType: 'funny' | 'not_funny') => {
         const current = get().postInteractions[postId];
-        const isLiked = current?.isLiked || false;
-        
+        const previousVote = current?.userVote;
+
         set(
           (state) => ({
             postInteractions: {
               ...state.postInteractions,
               [postId]: {
                 ...current,
-                likes: isLiked ? currentLikes - 1 : currentLikes + 1,
-                isLiked: !isLiked,
+                funny: voteType === 'funny'
+                  ? (previousVote === 'funny' ? current.funny - 1 : current.funny + 1)
+                  : (previousVote === 'funny' ? current.funny - 1 : current.funny),
+                notFunny: voteType === 'not_funny'
+                  ? (previousVote === 'not_funny' ? current.notFunny - 1 : current.notFunny + 1)
+                  : (previousVote === 'not_funny' ? current.notFunny - 1 : current.notFunny),
+                total: current.total + (previousVote ? 0 : 1),
+                userVote: previousVote === voteType ? null : voteType,
               },
             },
           }),
           false,
-          'toggleLike'
+          'toggleVote'
         );
       },
-      
-      incrementViews: (postId: string, currentViews: number) => {
+
+      incrementTotal: (postId: string) => {
         const current = get().postInteractions[postId];
-        
+
         set(
           (state) => ({
             postInteractions: {
               ...state.postInteractions,
               [postId]: {
                 ...current,
-                views: currentViews + 1,
+                total: current.total + 1,
               },
             },
           }),
           false,
-          'incrementViews'
+          'incrementTotal'
         );
       },
       
@@ -128,17 +133,19 @@ export const useFeedStore = create<FeedState>()(
       // Bulk initialization for performance
       initializeInteractions: (posts) => {
         const interactions: Record<string, PostInteraction> = {};
-        
+
         posts.forEach((post) => {
+          // 안전하게 vote_count 접근
+          const voteCount = post.vote_count || { funny: 0, not_funny: 0, total: 0 };
+
           interactions[post.id] = {
-            likes: post.interactions.likes,
-            comments: post.interactions.comments,
-            shares: post.interactions.shares,
-            views: post.interactions.views,
-            isLiked: false,
+            funny: voteCount.funny || 0,
+            notFunny: voteCount.not_funny || 0,
+            total: voteCount.total || 0,
+            userVote: null,
           };
         });
-        
+
         set({ postInteractions: interactions }, false, 'initializeInteractions');
       },
       

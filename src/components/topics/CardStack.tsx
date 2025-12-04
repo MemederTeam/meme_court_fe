@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, Topic } from "@/data/mockTopics";
+import { Topic } from "@/data/mockTopics";
 
 interface CardStackProps {
   topic: Topic;
@@ -8,8 +8,8 @@ interface CardStackProps {
 }
 
 export default function CardStack({ topic, onClick }: CardStackProps) {
-  const { id, title, cards, count, popularity, category } = topic;
-  const displayCards = cards.slice(0, 3);
+  const { id, title, post_count, thumbnail_images, popularity, } = topic;
+  const displayCards = thumbnail_images.slice(0, 3);
 
   const handleClick = () => {
     if (onClick) {
@@ -19,7 +19,7 @@ export default function CardStack({ topic, onClick }: CardStackProps) {
 
   return (
     <div 
-      className="relative bg-gray-800 border border-gray-600 rounded-lg p-6 h-80 cursor-pointer hover:bg-gray-750 transition-colors"
+      className="font-pixel relative bg-gray-800 border border-gray-600 rounded-lg p-6 h-80 cursor-pointer hover:bg-gray-750 transition-colors"
       onClick={handleClick}
     >
       <div className="flex justify-between items-start mb-4">
@@ -33,9 +33,9 @@ export default function CardStack({ topic, onClick }: CardStackProps) {
       </div>
       
       <div className="relative w-full h-48 mb-4 overflow-visible">
-        {displayCards.map((card, index) => (
+        {displayCards.map((imageUrl, index) => (
           <div
-            key={card.id}
+            key={`${id}-${index}`}
             className="absolute bg-gray-700 border border-gray-500 rounded-md p-3 shadow-lg"
             style={{
               width: index === 0 ? '75%' : '70%',
@@ -46,11 +46,11 @@ export default function CardStack({ topic, onClick }: CardStackProps) {
               transform: `rotate(${index * 4}deg)`
             }}
           >
-            <div className="w-full h-16 bg-gray-600 rounded mb-2 flex items-center justify-center overflow-hidden">
-              {card.image ? (
-                <img 
-                  src={card.image} 
-                  alt={card.title}
+            <div className="w-full h-full bg-gray-600 rounded flex items-center justify-center overflow-hidden">
+              {imageUrl ? (
+                <img
+                  src={imageUrl}
+                  alt={title}
                   className="w-full h-full object-cover"
                 />
               ) : (
@@ -60,18 +60,10 @@ export default function CardStack({ topic, onClick }: CardStackProps) {
           </div>
         ))}
       </div>
-      
+
       <div className="absolute bottom-4 right-4">
-        <span className="text-blue-400 font-bold text-lg">+{count}</span>
+        <span className="text-blue-400 font-bold text-lg">+{post_count}</span>
       </div>
-      
-      {category && (
-        <div className="absolute top-4 right-4">
-          <span className="text-xs bg-gray-700 text-gray-300 px-2 py-1 rounded">
-            {category}
-          </span>
-        </div>
-      )}
     </div>
   );
 }

@@ -7,7 +7,7 @@ interface TabNavigationProps {
 
 export default function TabNavigation({ activeTab, setActiveTab }: TabNavigationProps) {
   return (
-    <div className="flex border-b border-gray-600 mb-6">
+    <div className="font-pixel flex border-b border-gray-600 mb-6">
       <button
         onClick={() => setActiveTab("hot-topics")}
         className={`px-6 py-3 font-medium border-b-2 transition-colors ${
